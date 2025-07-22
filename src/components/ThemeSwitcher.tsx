@@ -15,7 +15,7 @@ export function ThemeSwitcher() {
       variant="outline"
       size="icon"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      leftIcon={isDark ? <Sun /> : <Moon />}
+      leftIcon={isDark ? <Moon /> : <Sun />}
       className="absolute top-4 right-4"
       aria-label={`Switch to ${isDark ? "light" : "dark"}`}
     ></Button>
