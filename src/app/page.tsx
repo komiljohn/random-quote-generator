@@ -1,5 +1,23 @@
-import { Button } from "@/components/ui/button";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-export default function Home() {
-  return <Button>Hello</Button>;
+import { DisplayQuotes } from "@/components/DisplayQuotes";
+import { getQueryClient } from "@/lib/getQueryClient";
+
+import { getRandomQuote } from "./queries";
+
+const DEFAULT_SKIP = 0;
+
+export default async function Home() {
+  const queryClient = getQueryClient();
+
+  const initialData = await queryClient.fetchQuery({
+    queryKey: ["get-quotes", DEFAULT_SKIP],
+    queryFn: () => getRandomQuote(DEFAULT_SKIP),
+  });
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <DisplayQuotes initialData={initialData} defaultSkip={DEFAULT_SKIP} />
+    </HydrationBoundary>
+  );
 }

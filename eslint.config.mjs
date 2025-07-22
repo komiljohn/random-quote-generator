@@ -26,6 +26,7 @@ const eslintConfig = [
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
       "@typescript-eslint/no-unused-vars": "error",
+      "no-console": "error",
     },
   },
 ];
