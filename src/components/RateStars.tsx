@@ -18,18 +18,19 @@ export default function RateStars({ id }: { id: number }) {
 
   return (
     <div className="flex items-center">
-      {[1, 2, 3, 4, 5].map((count) => (
+      {Array.from({ length: 5 }).map((_, idx) => (
         <Button
-          key={count}
+          key={idx}
           variant="ghost"
-          onClick={() => handleStarRating(count)}
+          onClick={() => handleStarRating(idx + 1)}
           size="sm"
           className="!px-1.5"
+          aria-label={`Rate ${idx + 1} star`}
         >
           <StarIcon
             size={24}
             className={
-              count <= (activeRate?.rate || 0)
+              idx + 1 <= (activeRate?.rate || 0)
                 ? "fill-yellow-400 text-yellow-400"
                 : "text-muted-foreground"
             }
