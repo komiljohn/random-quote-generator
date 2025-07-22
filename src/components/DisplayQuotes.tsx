@@ -7,6 +7,8 @@ import { useState } from "react";
 import { getRandomQuote, QuoteResponse } from "@/app/queries";
 
 import LoadFailQuote from "./LoadFailQuote";
+import LoadingStars from "./LoadingStars";
+import RateStars from "./RateStars";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
@@ -38,7 +40,7 @@ export function DisplayQuotes({
         Random quote generator
       </h2>
       <div className="bg-card border rounded-lg p-8 md:p-12 shadow-lg">
-        <div className="text-center space-y-6">
+        <div className="text-center space-y-6 mb-5">
           {isFetching ? (
             <div>
               <Skeleton className="h-11 max-md:h-7 w-full mb-[18px] max-md:mb-3" />
@@ -57,7 +59,19 @@ export function DisplayQuotes({
             </cite>
           )}
         </div>
+        <div className="p-4">
+          {!isFetching && quote ? (
+            <RateStars id={quote.id} />
+          ) : (
+            <LoadingStars />
+          )}
+        </div>
       </div>
+      {!isFetching && !quote && (
+        <div className="bg-card border rounded-lg p-8 md:p-12 shadow-lg text-center">
+          No quote found
+        </div>
+      )}
       <Button
         onClick={updateSkip}
         isLoading={isFetching}
