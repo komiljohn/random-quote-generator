@@ -7,8 +7,9 @@ Eslint - Linting
 Prettier - Formatting
 Husky - Git hooks
 Lint Staged - Work with husky
-Tanstack React Query - Server side state management
+Tanstack React Query - For managing queries and mutations
 Service workers - Support offline
+Zustand - State manager
 
 About task:
 On the docs quote api endpoint (https://api.quotable.io/random) was mentioned twice

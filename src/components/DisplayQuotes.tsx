@@ -9,6 +9,7 @@ import { getRandomQuote, QuoteResponse } from "@/app/queries";
 import LoadFailQuote from "./LoadFailQuote";
 import LoadingStars from "./LoadingStars";
 import RateStars from "./RateStars";
+import ShareQuoteButton from "./ShareQuoteButton";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
@@ -59,12 +60,21 @@ export function DisplayQuotes({
             </cite>
           )}
         </div>
-        <div className="p-4">
-          {!isFetching && quote ? (
-            <RateStars id={quote.id} />
-          ) : (
-            <LoadingStars />
-          )}
+        <div className="flex justify-between items-center gap-4">
+          <div>
+            {!isFetching && quote ? (
+              <RateStars id={quote.id} />
+            ) : (
+              <LoadingStars />
+            )}
+          </div>
+          <div>
+            {!isFetching && quote ? (
+              <ShareQuoteButton quote={quote.quote} author={quote.author} />
+            ) : (
+              <Skeleton className="h-9 w-[100px]" />
+            )}
+          </div>
         </div>
       </div>
       {!isFetching && !quote && (
