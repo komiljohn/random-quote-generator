@@ -36,11 +36,6 @@ export default function RateStars({ id }: { id: number }) {
           />
         </Button>
       ))}
-      {activeRate && (
-        <span className="text-xs text-muted-foreground ml-2">
-          {activeRate.rate}/5
-        </span>
-      )}
     </div>
   );
 }

@@ -3,6 +3,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
+import OfflineBar from "@/components/OfflineBar";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import Providers from "@/providers";
 
 const geistSans = Geist({
@@ -26,12 +28,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh`}
       >
         <main className="flex items-center justify-center h-full">
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            <OfflineBar />
+            <ThemeSwitcher />
+          </Providers>
         </main>
       </body>
     </html>

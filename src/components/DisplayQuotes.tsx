@@ -57,9 +57,14 @@ export function DisplayQuotes({
   if (isError) return <LoadFailQuote />;
   return (
     <div className="flex flex-col justify-center max-w-5xl mx-12 max-md:mx-4 w-full">
-      <h2 className="text-4xl font-medium mx-auto mb-5 max-lg:text-3xl max-md:text-xl">
-        Random quote generator
-      </h2>
+      <div className="flex flex-col items-center mb-8">
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+          Daily inspirations
+        </h1>
+        <p className="text-gray-600 text-lg">
+          Discover wisdom from great minds
+        </p>
+      </div>
       <div className="bg-card border rounded-lg p-8 md:p-12 shadow-lg">
         <div className="text-center space-y-6 mb-5">
           {isFetching ? (
@@ -102,8 +107,9 @@ export function DisplayQuotes({
         isLoading={isFetching}
         leftIcon={<RefreshCcwIcon />}
         className="w-fit mx-auto mt-3"
+        size="lg"
       >
-        Get random quote
+        Generate
       </Button>
     </div>
   );
