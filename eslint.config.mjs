@@ -29,6 +29,11 @@ const eslintConfig = [
       "no-console": "error",
     },
   },
+  {
+    ignores: [
+      "public/sw.js", // ignore the service worker
+    ],
+  },
 ];
 
 export default eslintConfig;

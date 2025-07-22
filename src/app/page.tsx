@@ -1,6 +1,7 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 import { DisplayQuotes } from "@/components/DisplayQuotes";
+import OfflineBar from "@/components/OfflineBar";
 import { getQueryClient } from "@/lib/getQueryClient";
 
 import { getRandomQuote } from "./queries";
@@ -17,6 +18,7 @@ export default async function Home() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
+      <OfflineBar />
       <DisplayQuotes initialData={initialData} defaultSkip={DEFAULT_SKIP} />
     </HydrationBoundary>
   );

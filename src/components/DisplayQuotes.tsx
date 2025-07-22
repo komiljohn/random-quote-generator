@@ -2,9 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { RefreshCcwIcon } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { getRandomQuote, QuoteResponse } from "@/app/queries";
+import useOnlineStatus from "@/hooks/useOffline";
+import { fakeQuoteResponse } from "@/lib/fakeQuotes";
 
 import LoadFailQuote from "./LoadFailQuote";
 import LoadingStars from "./LoadingStars";
@@ -20,19 +22,37 @@ export function DisplayQuotes({
   initialData: QuoteResponse;
   defaultSkip: number;
 }) {
+  const isOnline = useOnlineStatus();
+
   const [skip, setSkip] = useState(defaultSkip);
 
   const { data, isFetching, isError } = useQuery({
     queryKey: ["get-quotes", skip],
     queryFn: () => getRandomQuote(skip),
     initialData: skip === defaultSkip ? initialData : undefined,
+    enabled: isOnline,
   });
 
-  const quote = data?.quotes?.[0];
+  const computedData = useMemo(() => {
+    if (isOnline) {
+      return data;
+    } else {
+      const skipComputed = skip > fakeQuoteResponse.total ? defaultSkip : skip;
+      return {
+        ...fakeQuoteResponse,
+        quotes: fakeQuoteResponse.quotes.slice(skipComputed, skipComputed + 1),
+      };
+    }
+  }, [isOnline, data, skip, defaultSkip]);
 
   const updateSkip = () => {
-    setSkip(Math.floor(Math.random() * initialData.total));
+    const random = Math.floor(
+      Math.random() * (isOnline ? initialData.total : fakeQuoteResponse.total),
+    );
+    setSkip(random);
   };
+
+  const quote = computedData?.quotes?.[0];
 
   if (isError) return <LoadFailQuote />;
   return (
@@ -77,11 +97,6 @@ export function DisplayQuotes({
           </div>
         </div>
       </div>
-      {!isFetching && !quote && (
-        <div className="bg-card border rounded-lg p-8 md:p-12 shadow-lg text-center">
-          No quote found
-        </div>
-      )}
       <Button
         onClick={updateSkip}
         isLoading={isFetching}
